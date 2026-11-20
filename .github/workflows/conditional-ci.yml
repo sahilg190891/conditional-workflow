@@ -1,0 +1,21 @@
+name: Conditional CI
+
+on:
+  push: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run build
+        run: echo "Building project..."
+
+  test:
+    needs: build
+    if: startsWith(github.ref, 'refs/heads/feature/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: echo "Running tests on feature branch..."
